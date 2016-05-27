@@ -13,9 +13,9 @@ defmodule Pygmex do
   end
   def highlight(source, lexer, opts) do
     opts = [lexer_option(lexer), make_options(opts), tmp_file(source)] |> List.flatten
-    {content, 0} = System.cmd pygmentize, opts, into: ""
+    {content, _} = System.cmd pygmentize, opts, into: ""
 
-    content
+    content.present? ? content : source
   end
 
   defp lexer_option(lexer), do: ["-l", Atom.to_string(lexer), "-f", "html"]
