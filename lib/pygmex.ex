@@ -15,7 +15,11 @@ defmodule Pygmex do
     opts = [lexer_option(lexer), make_options(opts), tmp_file(source)] |> List.flatten
     {content, _} = System.cmd pygmentize, opts, into: ""
 
-    content.present? ? content : source
+    case content do
+      nil -> source
+      "" -> source
+      _ -> content
+    end
   end
 
   defp lexer_option(lexer), do: ["-l", Atom.to_string(lexer), "-f", "html"]
