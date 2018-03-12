@@ -29,7 +29,7 @@ defmodule Pygmex do
   end
 
   defp tmp_dir do
-    tmp_dir = Path.expand("../priv/tmp", Path.dirname(__ENV__.file))
+    tmp_dir = Application.get_env(:pygmex, :tmp_path) || Path.expand("../priv/tmp", Path.dirname(__ENV__.file))
     File.mkdir(tmp_dir)
 
     tmp_dir
